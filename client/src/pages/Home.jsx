@@ -50,7 +50,7 @@ const Home = ({type}) => {
 
 React.useEffect(() => {
   const fetchVideos = async () => {
-    const res = await axios.get(`/videos/${type}`);
+    const res = await axios.get(`http://localhost:3000/api/videos/${type}`);
     setVideos(res.data);
   };
   fetchVideos();

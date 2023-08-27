@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  currUser:null,
+  currVideo:null,
   loading:false,
   error:false
 
@@ -11,26 +11,21 @@ export const videoSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-   loginStart: (state)=>{
+   fetchStart: (state)=>{
     state.loading=true
    },
-   loginSuccess: (state,action)=>{
+   fetchSuccess: (state,action)=>{
     state.loading=false
-    state.currUser=action.payload
+    state.currVideo=action.payload
    },
-   loginFailure: (state)=>{
+   fetchFailure: (state)=>{
     state.loading=false
     state.error=true
-   },
-   logout: (state)=>{
-    state.currUser=null
-    state.loading=false
-    state.error=false
    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { loginStart, loginSuccess, loginFailure,logout  } = videoSlice.actions
+export const { fetchStart, fetchSuccess, fetchFailure  } = videoSlice.actions
 
 export default videoSlice.reducer

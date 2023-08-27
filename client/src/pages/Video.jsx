@@ -6,6 +6,10 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import Comments from "../components/Comments";
 import Card from "../components/Card";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios"
+import {fetchSuccess} from "../redux/videoSlice.js"
 
 const Container = styled.div`
   display: flex;
@@ -104,7 +108,53 @@ const Subscribe = styled.button`
   cursor: pointer;
 `;
 
+
 const Video = () => {
+  const {currentUser} = useSelector(state=>state.user)
+  const {currentVideo} = useSelector(state=>state.video)
+  const [loading, setLoading] = React.useState(true); 
+  
+
+  const dispatch = useDispatch()
+  // const [video,setVideo] = React.useState({})
+  // const [channel,setChannel] = React.useState({})
+
+  const path=useLocation().pathname.split('/')[2]
+//  console.log(path)
+  React.useEffect(() => {
+  const fetchData = async () => {
+  //     const videores = await axios.get(`http://localhost:3000/api/videos/GetVideo/${path}`);
+  //     const res = await axios.get(`http://localhost:3000/api/users/find/${videores.userId}`);
+  //     console.log(videores.data)
+  //     console.log("thb")
+  //     // setVideo(videores.data);
+  //     // setChannel(res.data);
+  //     dispatch(fetchSuccess(videores.data))
+  // }
+  // fetchData()
+  try {
+    const videoRes = await axios.get(`http://localhost:3000/api/videos/GetVideo/${path}`);
+    const channelRes = await axios.get(
+      `http://localhost:3000/api/users/find/${videoRes.data.userId}`
+    );
+    console.log(videoRes.data)
+     console.log("thb")
+    //setChannel(channelRes.data);
+    dispatch(fetchSuccess(videoRes.data));
+    setLoading("false")
+    
+  } catch (err) {
+    console.log(err)
+    setLoading("false")
+  }
+};
+fetchData();
+}, [path,dispatch]);
+  
+  // console.log(currentVideo)
+  if(loading || !currentVideo)
+  return <div>Loading...</div>;
+ else
   return (
     <Container>
       <Content>
@@ -113,13 +163,16 @@ const Video = () => {
             width="100%"
             height="720"
             src="https://www.youtube.com/embed/k3Vfj-e1Ma4"
-            title="YouTube video player"
+            // src={currentVideo?.VideoUrl}
+            title={currentVideo?.title}
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
           ></iframe>
         </VideoWrapper>
-        <Title>Test Video</Title>
+        <Title>
+
+          </Title>
         <Details>
           <Info>7,948,154 views • Jun 22, 2022</Info>
           <Buttons>
@@ -158,6 +211,7 @@ const Video = () => {
         <Comments/>
       </Content>
       <Recommendation>
+       {/* <Card type="sm"/>
         <Card type="sm"/>
         <Card type="sm"/>
         <Card type="sm"/>
@@ -169,8 +223,7 @@ const Video = () => {
         <Card type="sm"/>
         <Card type="sm"/>
         <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
+  <Card type="sm"/>*/}
       </Recommendation>
     </Container>
   );

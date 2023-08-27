@@ -79,7 +79,7 @@ const SignIn = () => {
     e.preventDefault()
     try{
       dispatch(loginStart())
-      const res = await axios.post("/auth/signin",{name,password})
+      const res = await axios.post("http://localhost:3000/api/auth/signin",{name,password})
       dispatch(loginSuccess(res.data))
       console.log(res.data);
 

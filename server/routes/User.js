@@ -3,9 +3,9 @@ import {getUser,removeUser,subscribe,unsubscribe,update} from '../controllers/Us
 import { verifyToken } from "../Verify.js";
 const router = express.Router();
 
-router.put("/:id",verifyToken,update);
-router.get("/find/:id",verifyToken,getUser)
-router.put("/unsubscribe/:id",verifyToken,unsubscribe)
-router.delete("/delete/:id",verifyToken,removeUser)
-router.put("/subscribe/:id",verifyToken,subscribe)
+router.put("/:id",update);
+router.get("/find/:id",getUser)
+router.put("/unsubscribe/:id",unsubscribe)
+router.delete("/delete/:id",removeUser)
+router.put("/subscribe/:id",subscribe)
 export default router;

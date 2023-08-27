@@ -60,7 +60,7 @@ export const GetVideo=async(req,res,next)=>{
     try{
         const videoweneed = await Video.findById(req.params.id);
         res.status(200).json(videoweneed);
-    }catch{
+    }catch(err){
         next(err);
     }
 }

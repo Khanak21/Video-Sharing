@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { format } from "timeago.js";
@@ -57,7 +57,7 @@ const Card = ({ type,video }) => {
   const [Channel,setChannel]=useState({})
   React.useEffect(() => {
     const fetchChannel = async () => {
-      const res = await axios.get(`/users/find/${video.userId}`);
+      const res = await axios.get(`http://localhost:3000/api/users/find/${video.userId}`);
       setChannel(res.data);
     };
     fetchChannel();
